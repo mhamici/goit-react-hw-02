@@ -31,17 +31,18 @@ const App = () => {
 
   const resetFeedback = () => {
     setFeedback(DEFAULT_FEEDBACK_DATA);
-    localStorage.removeItem("feedback-data"); 
+    localStorage.removeItem("feedback-data");
   };
 
   const totalFeedback = feedback.good + feedback.neutral + feedback.bad;
+  const positivePercentage = totalFeedback > 0 ? Math.round((feedback.good / totalFeedback) * 100) : 0;
 
   return (
     <div>
       <Description />
       <Options onLeaveFeedback={updateFeedback} onReset={resetFeedback} showReset={totalFeedback > 0} />
       {totalFeedback > 0 ? (
-        <Feedback feedback={feedback} />
+        <Feedback feedback={feedback} positivePercentage={positivePercentage} />
       ) : (
         <Notification />
       )}
